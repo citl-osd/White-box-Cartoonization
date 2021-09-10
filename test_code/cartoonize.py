@@ -1,7 +1,8 @@
 import os
 import cv2
 import numpy as np
-import tensorflow as tf 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior() 
 import network
 import guided_filter
 from tqdm import tqdm
@@ -10,11 +11,11 @@ from tqdm import tqdm
 
 def resize_crop(image):
     h, w, c = np.shape(image)
-    if min(h, w) > 720:
+    if min(h, w) > 1920:
         if h > w:
-            h, w = int(720*h/w), 720
+            h, w = int(1920*h/w), 1920
         else:
-            h, w = 720, int(720*w/h)
+            h, w = 1920, int(1920*w/h)
     image = cv2.resize(image, (w, h),
                        interpolation=cv2.INTER_AREA)
     h, w = (h//8)*8, (w//8)*8
